@@ -1,4 +1,4 @@
-package dev.venetsky.service;
+package dev.venetsky.listeners;
 
 
 import dev.venetsky.operation.OperationCommand;
@@ -52,7 +52,7 @@ public class OperationsConsoleListener {
         printAllAvailableOperations();
         while(!Thread.currentThread().isInterrupted()) {
             try {
-                System.out.println("Please enter next operation: \n");
+                System.out.println("Please enter next operation:");
                 return OperationType.valueOf(scanner.nextLine());
             } catch (IllegalArgumentException exception) {
                 System.out.println("No such command found!");

@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 public class OperationsConsoleListener {
 
     private final Scanner scanner;
-    private final Map<OperationType, OperationCommand>commandMap;
+    private final Map<OperationType, OperationCommand> commandMap;
 
     public OperationsConsoleListener(
             Scanner scanner,
-            List<OperationCommand>commandList
+            List<OperationCommand> commandList
     ) {
         this.scanner = scanner;
         this.commandMap =
@@ -31,26 +31,29 @@ public class OperationsConsoleListener {
                                 )
                         );
     }
+
     public void start() {
         System.out.println("Console listener started.");
     }
+
     public void listenConsole() {
         System.out.println("Please select operation:");
-        while(!Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted()) {
             OperationType operationType = null;
             try {
                 operationType = listenNextOperation();
-                if(operationType == null)
+                if (operationType == null)
                     return;
                 executeNextOperation(operationType);
             } catch (Exception ex) {
-                System.out.println("Error with executing command %s\n".formatted(operationType));
+                System.out.println("Error with executing command %s. %s\n ".formatted(operationType, ex.getMessage()));
             }
         }
     }
+
     public OperationType listenNextOperation() {
         printAllAvailableOperations();
-        while(!Thread.currentThread().isInterrupted()) {
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println("Please enter next operation:");
                 return OperationType.valueOf(scanner.nextLine());
@@ -60,14 +63,16 @@ public class OperationsConsoleListener {
         }
         return null;
     }
+
     public void executeNextOperation(OperationType operationType) {
         try {
-            OperationCommand command  = commandMap.get(operationType);
+            OperationCommand command = commandMap.get(operationType);
             command.executeCommand();
         } catch (Exception ex) {
-            System.out.println("Error with executing command %s\n".formatted(operationType));
+            System.out.println("Error with executing command %s. %s\n".formatted(operationType, ex.getMessage()));
         }
     }
+
     public void printAllAvailableOperations() {
         commandMap.keySet().stream().forEach(key -> System.out.println(key));
     }

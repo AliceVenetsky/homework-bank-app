@@ -18,7 +18,7 @@ public class ShowAllUsersCommand implements OperationCommand{
     public void executeCommand() {
         List<User> users =  userService.getAllUsers();
         System.out.println("List of all users:");
-        users.forEach(user -> System.out.println(user));
+        users.forEach(System.out::println);
     }
 
     @Override

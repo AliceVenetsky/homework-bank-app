@@ -24,8 +24,7 @@ public class WithdrawAccountCommand implements OperationCommand{
         System.out.println("Enter money amount:");
         int moneyAmount = Integer.parseInt(scanner.nextLine());
         accountService.withdrawMoneyFromAccount(accountId, moneyAmount);
-        System.out.println("Money %s withdrawn from account id %s"
-                .formatted(moneyAmount, accountId));
+        System.out.printf("Money %s withdrawn from account id %s%n", moneyAmount, accountId);
     }
 
     @Override

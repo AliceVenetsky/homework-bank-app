@@ -10,9 +10,9 @@ import java.util.Scanner;
 @Component
 public class CreateAccountCommand implements OperationCommand{
 
-    final private Scanner scanner;
-    final private UserService userService;
-    final private AccountService accountService;
+    private final Scanner scanner;
+    private final UserService userService;
+    private final AccountService accountService;
 
     public CreateAccountCommand(
             Scanner scanner,

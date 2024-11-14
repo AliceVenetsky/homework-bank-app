@@ -22,15 +22,16 @@ public class UserService {
     }
 
     public User createUser(String login) {
-        if(logins.contains(login))
+        if (logins.contains(login))
             throw new IllegalArgumentException("User with login %s is already exists!".formatted(login));
         logins.add(login);
-        idCounter ++;
-        User user  = new User(idCounter, login, new ArrayList<>());
+        idCounter++;
+        User user = new User(idCounter, login, new ArrayList<>());
         users.put(idCounter, user);
-        Account account = accountService.createAccount(user);
+        accountService.createAccount(user);
         return user;
     }
+
     public Optional<User> findUserById(int id) {
         return Optional.ofNullable(users.get(id));
     }

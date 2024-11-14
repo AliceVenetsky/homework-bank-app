@@ -19,6 +19,7 @@ public class AccountService {
         this.accountProperties = accountProperties;
 
     }
+
     public Account createAccount(User user) {
         accountCounter++;
         Account account = new Account(
@@ -52,19 +53,19 @@ public class AccountService {
     public void withdrawMoneyFromAccount(int accountId, int money) {
         checkMoneyAmount(money);
         Account account = findAccountById(accountId)
-                .orElseThrow(()-> new IllegalArgumentException("Account doesn't exist!"));
-        if(account.getMoneyAmount() < money) {
-            throw new IllegalArgumentException( "Not enough money for withdrawal!");
+                .orElseThrow(() -> new IllegalArgumentException("Account doesn't exist!"));
+        if (account.getMoneyAmount() < money) {
+            throw new IllegalArgumentException("Not enough money for withdrawal!");
         }
         account.setMoneyAmount(account.getMoneyAmount() - money);
     }
 
     public Account closeAccount(int accountId) {
         Account account = findAccountById(accountId)
-                .orElseThrow(()->new IllegalArgumentException("Account doesn't exist!"));
-        List<Account>accountList = getAllUserAccounts(account.getUserId());
-        if(accountList.size() == 1)
-            throw new IllegalArgumentException("Can't close only ine account!");
+                .orElseThrow(() -> new IllegalArgumentException("Account doesn't exist!"));
+        List<Account> accountList = getAllUserAccounts(account.getUserId());
+        if (accountList.size() == 1)
+            throw new IllegalArgumentException("Can't close only one account!");
 
         Account accountToDeposit = accountList.stream()
                 .filter(acc -> acc.getAccountId() != accountId)
@@ -74,18 +75,20 @@ public class AccountService {
         accounts.remove(accountId);
         return account;
     }
+
     private void checkMoneyAmount(int money) {
-        if(money <= 0)
-            throw new IllegalArgumentException("Illegal money amount!");
+        if (money <= 0)
+            throw new IllegalArgumentException("Illegal money amount! Money amount must be positive!");
     }
+
     public void transferMoney(int accountFrom, int accountTo, int money) {
         checkMoneyAmount(money);
         Account accountTransferFrom = findAccountById(accountFrom)
-                .orElseThrow(()->new IllegalArgumentException("Account doesn't exist!"));
+                .orElseThrow(() -> new IllegalArgumentException("Transfer from account  doesn't exist!"));
         Account accountTransferTo = findAccountById(accountTo)
-                .orElseThrow(()->new IllegalArgumentException("Account doesn't exist!"));
-        if(accountTransferFrom.getMoneyAmount() < money) {
-            throw new IllegalArgumentException( "Not enough money for withdrawal!");
+                .orElseThrow(() -> new IllegalArgumentException("Transfer to account doesn't exist!"));
+        if (accountTransferFrom.getMoneyAmount() < money) {
+            throw new IllegalArgumentException("Not enough money for withdrawal!");
         }
         int amountToDeposit = accountTransferFrom.getUserId() != accountTransferTo.getUserId()
                 ? (int) (money - money * accountProperties.getTransferCommission())

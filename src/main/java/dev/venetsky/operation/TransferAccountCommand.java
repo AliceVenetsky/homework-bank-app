@@ -25,8 +25,7 @@ public class TransferAccountCommand implements OperationCommand{
         System.out.println("Enter money amount to transfer:");
         int money = Integer.parseInt(scanner.nextLine());
         accountService.transferMoney(accountFrom, accountTo, money);
-        System.out.println("Successfully transfered money from account %s to account %s"
-                .formatted(accountFrom, accountTo));
+        System.out.printf("Successfully transfered money from account %s to account %s%n", accountFrom, accountTo);
     }
 
     @Override

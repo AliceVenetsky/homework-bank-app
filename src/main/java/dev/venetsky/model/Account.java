@@ -1,39 +1,54 @@
 package dev.venetsky.model;
 
+import jakarta.persistence.*;
+
+import java.lang.annotation.Target;
+
+@Entity
+@Table(name = "accounts")
 public class Account {
 
-    private final int userId;
-    private final int accountId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long accountId;
 
-    public long getMoneyAmount() {
-        return moneyAmount;
+    @ManyToOne()
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @Column(name = "money_amount")
+    private Integer moneyAmount;
+
+    public Account() {
     }
 
-    private long moneyAmount;
-
-    public Account(int accountId, int userId, int defaultMoneyAmount) {
+    public Account(Long accountId, User user, int defaultMoneyAmount) {
 
         this.accountId = accountId;
-        this.userId = userId;
+        this.user = user;
         this.moneyAmount = defaultMoneyAmount;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
-    public int getAccountId() {
+
+    public long getAccountId() {
         return accountId;
     }
 
-    public void setMoneyAmount(long moneyAmount) {
+    public int getMoneyAmount() {
+        return moneyAmount;
+    }
+
+    public void setMoneyAmount(int moneyAmount) {
         this.moneyAmount = moneyAmount;
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "userId=" + userId +
-                ", accountId=" + accountId +
+                "accountId=" + accountId +
                 ", moneyAmount=" + moneyAmount +
                 '}';
     }

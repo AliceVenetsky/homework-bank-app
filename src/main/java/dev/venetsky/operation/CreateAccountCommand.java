@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 @Component
-public class CreateAccountCommand implements OperationCommand{
+public class CreateAccountCommand implements OperationCommand {
 
     private final Scanner scanner;
     private final UserService userService;
@@ -27,7 +27,7 @@ public class CreateAccountCommand implements OperationCommand{
     @Override
     public void executeCommand() {
         System.out.println("Enter user id for which to create an account:");
-        int userId = Integer.parseInt(scanner.nextLine());
+        long userId = Long.parseLong(scanner.nextLine());
         User user = userService.findUserById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("No such user with id %s".formatted(userId)));
         accountService.createAccount(user);

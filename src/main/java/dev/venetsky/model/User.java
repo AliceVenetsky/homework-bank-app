@@ -1,15 +1,29 @@
 package dev.venetsky.model;
 
+import jakarta.persistence.*;
+
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
 public class User {
 
-    private final String login;
-    private final int userId;
-    private final List<Account> accountList;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
-    public User(int id, String login, List<Account> list) {
+    @Column(name = "user_login", unique = true)
+    private String login;
+
+    @OneToMany(mappedBy = "user")
+    private List<Account> accountList;
+
+    public User() {
+    }
+
+    public User(Long id, String login, List<Account> list) {
         this.login = login;
         this.userId = id;
         this.accountList = new ArrayList<>();
@@ -19,7 +33,7 @@ public class User {
         return login;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 

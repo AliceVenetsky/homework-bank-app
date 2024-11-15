@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ShowAllUsersCommand implements OperationCommand{
+public class ShowAllUsersCommand implements OperationCommand {
     private final UserService userService;
 
     public ShowAllUsersCommand(UserService userService) {
@@ -16,7 +16,7 @@ public class ShowAllUsersCommand implements OperationCommand{
 
     @Override
     public void executeCommand() {
-        List<User> users =  userService.getAllUsers();
+        List<User> users = userService.getAllUsers();
         System.out.println("List of all users:");
         users.forEach(System.out::println);
     }
